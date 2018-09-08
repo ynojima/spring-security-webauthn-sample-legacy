@@ -1,19 +1,12 @@
-# Spring Security WebAuthn
+# Spring Security WebAuthn Sample Legacy
 
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=spring-security-webauthn&metric=coverage)](https://sonarcloud.io/dashboard?id=spring-security-webauthn)
-[![license](https://img.shields.io/github/license/ynojima/spring-security-webauthn.svg)](https://github.com/ynojima/spring-security-webauthn/blob/master/LICENSE.txt)
+[![license](https://img.shields.io/github/license/ynojima/spring-security-webauthn-sample-legacy.svg)](https://github.com/ynojima/spring-security-webauthn-sample-legacy/blob/master/LICENSE.txt)
 
-
-Spring Security WebAuthn provides Web Authentication specification support for your Spring application.
-Users can login with WebAuthn compliant authenticator.
-
-**This library is intended to be merged into [Spring-Security](https://github.com/spring-projects/spring-security) 
-as a pull-request. Package name will be changed when it is remade into the pull-request. This library itself is 
-feature-complete, but is not for production use for now as it depends on customized Spring-Security build.**
+A sample application for Spring Security WebAuthn
 
 ## Documentation
 
-You can find out more details from the [reference](https://ynojima.github.io/spring-security-webauthn/en/).
+You can find out more details from the [reference](https://ynojima.github.io/spring-security-webauthn-sample-legacy/en/).
 
 ## Build
 
@@ -24,34 +17,28 @@ self-contained bootstrap mechanism for the build.
 ### Prerequisites
 
 - Java8 or later
-- Spring Framework 5.0 or later
-- Spring Security 5.0 (Customized build)
-
-To support multi factor authentication flow, spring-security-webauthn requires modification to spring-security.
-The modification will be sent to spring-security project as a pull-request by the spring-security-webauthn becomes stable, 
-but for now, not available with normal spring-security.
 
 ### Checkout sources
 
 ```
-git clone https://github.com/ynojima/spring-security-webauthn
+git clone https://github.com/ynojima/spring-security-webauthn-sample-legacy
 ```
 
-### Build all jars
+### Build
 
 ```
-./gradlew build
+./gradlew bootJar
 ```
 
 ### Execute sample application
 
 ```
-./gradlew spring-security-webauthn-sample:bootRun
+./gradlew bootRun
 ```
 
 ![Login view](./docs/src/reference/asciidoc/en/images/login.png "Login view")
 
 ## License
 
-Spring Security WebAuthn is Open Source software released under the
+Spring Security WebAuthn Sample Legacy is Open Source software released under the
 [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html).

@@ -10,10 +10,77 @@
 :core-jdbc: http://docs.spring.io/spring/docs/{spring-version}/spring-framework-reference/html/jdbc.html
 :core-jdbc-JdbcTemplate: http://docs.spring.io/spring/docs/{spring-version}/spring-framework-reference/html/jdbc.html#jdbc-JdbcTemplate
 
-= Spring Security WebAuthn Reference
+= Spring Security WebAuthn Sample Legacy Reference
 
-include::introduction.adoc[]
-include::quick-start.adoc[]
-include::configuration.adoc[]
-include::spring-boot.adoc[]
-include::sample-app.adoc[]
+== サンプルアプリケーション
+
+Spring Security WebAuthn Sample Legacyはspring-security-webauthnの主要機能をデモするサンプルアプリケーションです。
+
+=== サンプルアプリケーションの実行
+
+サンプルアプリケーションは以下のコマンドで実行することが出来ます。
+
+```
+./gradlew spring-security-webauthn-sample:bootRun
+```
+
+=== ユーザーおよび認証デバイスの登録
+
+image::images/signup.png[サインアップ画面]
+
+サインアップ画面は、 `http://localhost:8080/signup` でアクセスすることが出来ます。
+ユーザー情報を入力し、ユーザーと認証デバイスの登録を行ってください。
+
+image::images/signup-with-firefox-popup.png[認証デバイス要求ポップアップ]
+
+「認証デバイス」欄の「追加」ボタンを押下すると認証デバイスでの操作を促すポップアップが表示され、
+認証デバイスの登録モードになりますので、ポップアップに従い登録を済ませてください。
+認証デバイスは紛失・故障に備え、バックアップとして複数登録することが出来ます。
+パスワードのみによる単一要素認証を許可する場合は、「パスワード認証を許可」にチェックを入れてください。
+
+=== ユーザー認証
+
+ログイン画面は、 `http://localhost:/8080/login` でアクセスすることが出来ます。
+サンプルアプリケーションではユーザー認証について、三つの認証フローをサポートしています。
+
+- パスワード＋認証デバイスによる多要素認証
+- ユーザー検証機能付き認証デバイスによるパスワードレス多要素認証
+- パスワードのみによる単一要素認証
+
+以下、三つの認証フローについてそれぞれ説明していきます。
+
+==== パスワード＋認証デバイスによる多要素認証
+
+ユーザー検証機能が付いていないFIDO-U2Fのトークンのような認証デバイスを登録した場合は、パスワード＋認証デバイスによる
+多要素認証が可能です。
+
+image::images/login.png[ログイン画面]
+
+ログイン画面でユーザー名（Emailアドレス）とパスワードを入力し、ログインボタンを押下してください。
+
+image::images/authenticatorLogin.png[認証デバイスログイン画面]
+
+パスワード認証に成功した場合、第二認証要素として認証デバイスを用いた認証を求める、認証デバイスログイン画面が開きます。
+認証を求めるポップアップが開いたら、認証デバイスを操作し、認証を完了してください。認証に成功すると、画面が自動的に遷移します。
+
+==== ユーザー検証機能付き認証デバイスによるパスワードレス多要素認証
+
+ユーザー検証機能が付いている認証デバイスを登録した場合、パスワードレス認証が可能です。
+2018年7月現在、Windows 10 Insider Previewバンドル版Edgeのみがユーザー検証機能が付いている認証デバイスを
+サポートしているため、Edgeのみで利用可能です。
+
+image::images/login-with-edge.png[ログイン画面（パスワードレスログイン）]
+
+ログイン画面の「パスワードレスログイン」ボタンを押下すると、認証デバイスを用いた認証を求めるポップアップが開きます。
+認証デバイスを操作し、認証を完了してください。認証に成功すると、画面が自動的に遷移します。
+
+==== パスワード認証
+
+ユーザー登録時に「パスワード認証を許可」にチェックを入れていた場合、
+通常のパスワード認証が利用可能です。
+
+image::images/login.png[ログイン画面]
+
+ログイン画面でユーザー名とパスワードを入力し、「ログイン」ボタンを押下して認証を完了してください。
+認証に成功すると、画面は自動的に遷移します。
+
