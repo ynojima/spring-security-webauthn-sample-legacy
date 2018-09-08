@@ -6,8 +6,8 @@ jdk:
   - oraclejdk9
 
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - ./gradlew sonarqube bootJar test javadoc asciidoc -Dsonar.organization=ynojima -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+  # the following command line builds the project and runs the tests
+  - ./gradlew bootJar test javadoc asciidoc
 
 deploy:
   provider: pages
@@ -19,7 +19,3 @@ deploy:
   on:
     branch: master
     jdk: openjdk8
-
-addons:
-  sonarcloud:
-    organization: "ynojima"

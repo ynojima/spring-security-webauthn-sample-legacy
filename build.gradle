@@ -9,37 +9,112 @@ buildscript {
 
 }
 
-plugins{
+plugins {
+    id "java"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "org.springframework.boot" version "2.0.3.RELEASE"
+    id "com.moowork.node" version "1.1.1"
+    id "com.moowork.gulp" version "1.1.1"
     id "org.sonarqube" version "2.6.2"
     id 'nebula.provided-base' version '3.0.3'
     id 'org.asciidoctor.convert' version "1.5.2"
+    id "jacoco"
+}
+
+jar {
+    version = null
 }
 
 group 'net.sharplab.springframework.security.extensions'
 version "${springSecurityWebAuthnVersion}"
+description = "Spring Security WebAuthn sample legacy"
 
-subprojects{
-    apply plugin: 'java'
-    apply plugin: 'nebula.provided-base'
-    apply plugin: "io.spring.dependency-management"
-    apply plugin: 'jacoco'
+sourceCompatibility = 1.8
 
-    sourceCompatibility = 1.8
-
-    repositories {
-        mavenCentral()
-        flatDir {
-            dirs "../libs"
-        }
-        //maven { url "https://oss.jfrog.org/artifactory/libs-snapshot" }
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs "./libs"
     }
+    //maven { url "https://oss.jfrog.org/artifactory/libs-snapshot" }
+}
 
-    javadoc {
-        options.charSet = 'UTF-8'
-        options.encoding = 'UTF-8'
+javadoc {
+    options.charSet = 'UTF-8'
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Custom Spring Security
+    compile('org.springframework.security:spring-security-core:5.1.0.BUILD-SNAPSHOT')
+    compile('org.springframework.security:spring-security-config:5.1.0.BUILD-SNAPSHOT')
+    compile('org.springframework.security:spring-security-web:5.1.0.BUILD-SNAPSHOT')
+
+    // Spring Security WebAuthn
+    compile('net.sharplab.springframework.security.webauthn:spring-security-webauthn-core:0.5.0-SNAPSHOT')
+    compile('net.sharplab.springframework.security.webauthn:spring-security-webauthn-thymeleaf:0.5.0-SNAPSHOT')
+
+    // Spring Framework
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-security')
+
+    // WebAuthn4J
+    compile("com.webauthn4j:webauthn4j-core:${webauthn4jVersion}")
+
+    //Terasoluna
+    compile("org.terasoluna.gfw:terasoluna-gfw-common:${terasolunaVersion}")
+    compile("org.terasoluna.gfw:terasoluna-gfw-web:${terasolunaVersion}")
+
+    //Web
+
+    //Others
+    compile("org.slf4j:jcl-over-slf4j")
+    compile('ch.qos.logback:logback-classic')
+    compile('javax.xml.bind:jaxb-api')
+    compile("org.modelmapper:modelmapper:${modelMapperVersion}")
+    compile('org.flywaydb:flyway-core')
+    runtime('com.h2database:h2')
+    runtime('mysql:mysql-connector-java')
+    compile("org.lazyluke:log4jdbc-remix:${log4jdbcVersion}")
+
+    //Test
+    testCompile("com.webauthn4j:webauthn4j-test:${webauthn4jVersion}")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+    testCompile('junit:junit')
+    testCompile('org.mockito:mockito-core')
+    testCompile('org.assertj:assertj-core')
+    testCompile("org.dbunit:dbunit:${dbunitVersion}")
+    testCompile("com.github.springtestdbunit:spring-test-dbunit:${springTestDbunitVersion}")
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.security:spring-security-bom:${springSecurityVersion}"
     }
 }
 
+
+node {
+    download = true
+}
+// run npm install
+gulp_default.dependsOn 'npmInstall'
+
+// run gulp install
+gulp_default.dependsOn 'installGulp'
+
+
+// processResources is a Java task. Run the gulpfile.js before this task using the 'default' task in the gulpfile.js
+processResources.dependsOn gulp_default
+
+sonarqube {
+    skipProject = true
+}
 
 asciidoctorj {
     version = asciidoctorVersion
@@ -57,14 +132,14 @@ asciidoctor {
 
     //noinspection GroovyAssignabilityCheck
     attributes  docinfo: '',
-                copycss : '',
-                icons : 'font',
-                'source-highlighter': 'prettify',
-                sectanchors : '',
-                toc2: '',
-                idprefix: '',
-                idseparator: '-',
-                doctype: 'book',
-                numbered: '',
-                revnumber : "${springSecurityWebAuthnVersion}"
+            copycss : '',
+            icons : 'font',
+            'source-highlighter': 'prettify',
+            sectanchors : '',
+            toc2: '',
+            idprefix: '',
+            idseparator: '-',
+            doctype: 'book',
+            numbered: '',
+            revnumber : "${springSecurityWebAuthnVersion}"
 }
