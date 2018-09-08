@@ -54,14 +54,15 @@ dependencies {
     compile('net.sharplab.springframework.security.webauthn:spring-security-webauthn-core:0.5.0-SNAPSHOT')
     compile('net.sharplab.springframework.security.webauthn:spring-security-webauthn-thymeleaf:0.5.0-SNAPSHOT')
 
+    // Spring Security WebAuthn Dependencies
+    compile("com.webauthn4j:webauthn4j-core:${webauthn4jVersion}")
+    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
+
     // Spring Framework
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-security')
-
-    // WebAuthn4J
-    compile("com.webauthn4j:webauthn4j-core:${webauthn4jVersion}")
 
     //Terasoluna
     compile("org.terasoluna.gfw:terasoluna-gfw-common:${terasolunaVersion}")

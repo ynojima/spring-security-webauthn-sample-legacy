@@ -1,7 +1,7 @@
 $ = require('jquery');
 jQuery = $;
 require('bootstrap');
-require('icheck');
+//require('icheck');
 require('es6-promise/auto');
 
 require('bootstrap/dist/css/bootstrap.css');
